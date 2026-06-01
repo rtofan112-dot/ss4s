@@ -61,6 +61,11 @@ static SS4S_VideoOpenResult OpenVideo(const SS4S_VideoInfo *info, const SS4S_Vid
     if (result != SS4S_VIDEO_OPEN_OK) {
         goto finish;
     }
+    
+    // Force the TV not to queue frames internally (disables frame smoothing/buffering)
+    NDL_DirectVideoSetFrameDropThreshold(0);
+    SS4S_NDL_webOS5_Log(SS4S_LogLevelInfo, "NDL", "Called NDL_DirectVideoSetFrameDropThreshold(0) for low latency");
+
     *instance = (SS4S_VideoInstance *) context;
     result = SS4S_VIDEO_OPEN_OK;
 
