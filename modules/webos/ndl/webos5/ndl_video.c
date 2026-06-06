@@ -90,10 +90,8 @@ static SS4S_VideoFeedResult FeedVideo(SS4S_VideoInstance *instance, const unsign
         return SS4S_VIDEO_FEED_ERROR;
     }
     uint64_t now = GetTimeUs();
-    int renderBufferLength = 0;
-    if (context->lastFrameTime > 0 && NDL_DirectVideoGetRenderBufferLength(&renderBufferLength) == 0) {
-        float bufLen = renderBufferLength > 0 ? (float) renderBufferLength : 0.5f;
-        float latency = bufLen * (float) (now - context->lastFrameTime);
+    if (context->lastFrameTime > 0) {
+        float latency = (float) (now - context->lastFrameTime);
         SS4S_NDL_webOS5_Lib->VideoStats.ReportFrame(context->player, (int) latency);
     }
     context->lastFrameTime = now;

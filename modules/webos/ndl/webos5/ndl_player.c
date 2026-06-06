@@ -41,11 +41,9 @@ int SS4S_NDL_webOS5_UnloadMedia(SS4S_PlayerContext *context) {
 }
 
 uint64_t SS4S_NDL_webOS5_GetPts(const SS4S_PlayerContext *context) {
-    struct timespec now;
-    clock_gettime(CLOCK_MONOTONIC, &now);
-    uint64_t pts = (now.tv_sec * 1000) + (now.tv_nsec / 1000000) - context->mediaLoadedTime.tv_sec * 1000 -
-                   context->mediaLoadedTime.tv_nsec / 1000000;
-    return pts;
+    (void)context;
+    // Возвращаем 0 для отключения встроенной A/V буферизации и синхронизации webOS
+    return 0;
 }
 
 static SS4S_PlayerContext *CreatePlayerContext(SS4S_Player *player) {
